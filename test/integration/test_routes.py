@@ -26,3 +26,56 @@ def test_home_post():
     with APP.test_client() as test_client:
         response = test_client.post('/')
         assert response.status_code == 500
+
+
+def test_login():
+    """
+    GIVEN a flask application
+    WHEN the page '/login' is requested (GET)
+    THEN check for a valid response
+    """
+    with APP.test_client() as test_client:
+        response = test_client.get('/login')
+        assert response.status_code == 200
+        assert b"Site under construction, this form is useless!!" in response.data
+        assert b"Email Address" in response.data
+        assert b"Password" in response.data
+
+
+def test_login_post():
+    """
+    GIVEN a Flask app
+    WHEN the page '/login' is posted (POST),
+    THEN check for a valid response
+    """
+    with APP.test_client() as test_client:
+        response = test_client.post('/login')
+        assert response.status_code == 200
+        assert b"Email Address" in response.data
+        assert b"Password" in response.data
+
+
+def test_sign_up():
+    """
+    GIVEN a flask application
+    WHEN the page '/sign_up' is requested (GET)
+    THEN check for a valid response
+    """
+    with APP.test_client() as test_client:
+        response = test_client.get('/sign_up')
+        assert response.status_code == 200
+        assert b"Site under construction, this form is useless!!" in response.data
+        assert b"First and last Name:" in response.data
+
+
+def test_sign_up_post():
+    """
+    GIVEN a Flask app
+    WHEN th page '/sign_up' is posted (POST),
+    THEN check for a valid response
+    """
+    with APP.test_client() as test_client:
+        response = test_client.post('/sign_up')
+        assert response.status_code == 200
+        assert b"Site under construction, this form is useless!!" in response.data
+        assert b"First and last Name:" in response.data

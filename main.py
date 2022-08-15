@@ -30,6 +30,16 @@ def home():
     return render_template("home.html", certificates=DATABASE.get_all_certificates())
 
 
+@APP.route("/login", methods=['GET', 'POST'])
+def login():
+    return render_template("login.html")
+
+
+@APP.route("/sign_up", methods=['GET', 'POST'])
+def sign_up():
+    return render_template("sign_up.html")
+
+
 if __name__ == '__main__':
     DATABASE = DatabaseHandler()
     APP.run(host='0.0.0.0', debug=True)
