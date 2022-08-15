@@ -1,3 +1,4 @@
+import socket
 from flask import Flask, request, render_template, flash
 from models import DatabaseHandler
 
@@ -5,6 +6,7 @@ DATABASE = None
 
 APP = Flask(__name__)
 APP.config['SECRET_KEY'] = 'wertivicwdfkjk_fwr924/§$=)("?§'
+HOSTNAME = socket.gethostname()
 
 
 def handle_cert_title(title):
@@ -27,17 +29,17 @@ def home():
 
     if DATABASE is None:
         return render_template("home.html")
-    return render_template("home.html", certificates=DATABASE.get_all_certificates())
+    return render_template("home.html", certificates=DATABASE.get_all_certificates(), hostname=HOSTNAME)
 
 
 @APP.route("/login", methods=['GET', 'POST'])
 def login():
-    return render_template("login.html")
+    return render_template("login.html", hostname=HOSTNAME)
 
 
 @APP.route("/sign_up", methods=['GET', 'POST'])
 def sign_up():
-    return render_template("sign_up.html")
+    return render_template("sign_up.html", hostname=HOSTNAME)
 
 
 if __name__ == '__main__':
