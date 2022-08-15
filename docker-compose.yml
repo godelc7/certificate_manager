@@ -1,0 +1,11 @@
+version: '3.8'
+services:
+    certificate_manager:
+        build: .
+        volumes:
+            - ./:/app
+        ports:
+            - "5000:5000"
+        environment:
+            FLASK_DEBUG: 1
+    # TODO: add a service for database, this would require separated Dockerfile and python scripts for the database
