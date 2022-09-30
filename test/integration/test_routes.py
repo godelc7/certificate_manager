@@ -1,3 +1,6 @@
+import sys
+import os
+sys.path.append(os.path.split(os.path.split(os.path.dirname(os.path.abspath(__file__)))[0])[0])
 from main import APP
 
 
@@ -14,7 +17,7 @@ def test_home():
         assert b"Liste deiner bisherigen Zertifikate:" in response.data
         assert b"Fehler: Deine Zertifikatsbezeichnung is leer" not in response.data
         assert b"Fehler: Nur alpha numerische Zertifikatsbezeichnungen zugelassen" not in response.data
-        assert b"Erfolg: Dein neues Zertikat wurde in der Datenbank eingetragen" not in response.data
+        assert b"Erfolg: Dein neues Zertifikat wurde in der Datenbank eingetragen" not in response.data
 
 
 def test_home_post():
