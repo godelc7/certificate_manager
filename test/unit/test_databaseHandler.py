@@ -18,9 +18,9 @@ def setup_database(clean, request):
     yield db
 
 
-@pytest.mark.parametrize('setup_database', ['FILE_MODE', 'MEMORY_MODE'], indirect=True)
+@pytest.mark.parametrize('setup_database', ['FILE_MODE', 'MEMORY_MODE'],
+                         indirect=True)
 class TestDatabaseHandler:
-
     def test_create_database(self, setup_database):
         db = setup_database
         assert db.username == 'godel'
@@ -49,7 +49,8 @@ class TestDatabaseHandler:
         certs = db.get_all_certificates()
         assert len(certs) == 2
         assert db.get_certificate_with_name("Test Certificate")[0][0] == 2
-        assert db.get_certificate_with_name("Test Certificate")[0][1] == "Test Certificate"
+        st = "Test Certificate"
+        assert db.get_certificate_with_name("Test Certificate")[0][1] == st
 
     def test_remove_certificate(self, setup_database):
         db = setup_database

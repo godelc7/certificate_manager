@@ -12,24 +12,33 @@ HOSTNAME = socket.gethostname()
 def handle_cert_title(title):
     if len(title) == 0:
         flash('Fehler: Deine Zertifikatsbezeichnung is leer', category='error')
-    elif not all([item.isalnum() or item.isspace() or item in ('(', ')', '-', '_') for item in title]):
-        flash('Fehler: Nur alphanumerische Zertifikatsbezeichnungen zugelassen', category='error')
+    elif not all([item.isalnum() or item.isspace() or
+                 item in ('(', ')', '-', '_') for item in title]):
+        msg = 'Fehler: Nur alphanumerische Zertifikatsbezeichnungen zugelassen'
+        flash(msg, category='error')
     elif len(title) < 4:
-        flash('Fehler: Zertifikatsbezeichnungen müssen mindestens 4 Zeichen enthalten', category='error')
+        msg = 'Fehler: Zertifikatsbezeichnungen müssen mindestens '
+        msg += ' 4 Zeichen enthalten'
+        flash(msg, category='error')
     else:
-        DATABASE.insert_certificate(title)
-        flash('Erfolg: Dein neues Zertifikat wurde in der Datenbank eingetragen', category='success')
+        if DATABASE is not None:
+            DATABASE.insert_certificate(title)
+            msg = 'Erfolg: Dein neues Zertifikat wurde '
+            msg += 'in der Datenbank eingetragen'
+            flash(msg, category='success')
 
 
 @APP.route("/", methods=['GET', 'POST'])
 def home():
-    if request.method == 'POST':
-        cert_title = request.form.get('certificate')
+    if request.method == 'POST':  # type: ignore
+        cert_title = request.form.get('certificate')  # type: ignore
         handle_cert_title(cert_title)
 
     if DATABASE is None:
         return render_template("home.html")
-    return render_template("home.html", certificates=DATABASE.get_all_certificates(), hostname=HOSTNAME)
+    return render_template("home.html",
+                           certificates=DATABASE.get_all_certificates(),
+                           hostname=HOSTNAME)
 
 
 @APP.route("/login", methods=['GET', 'POST'])
