@@ -14,8 +14,8 @@ def test_home():
     with APP.test_client() as test_client:
         response = test_client.get('/')
         assert response.status_code == 200
-        assert b"Hello Nutzer, trage hier deine Zertifizierungen ein!" in \
-            response.data
+        tmp_str = "Hello Nutzer, trage hier deine Zertifizierungen ein!"
+        assert tmp_str.encode('ascii') in response.data
         assert b"Liste deiner bisherigen Zertifikate:" in response.data
         assert b"Fehler: Deine Zertifikatsbezeichnung is leer" not in \
             response.data
