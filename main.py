@@ -1,3 +1,10 @@
+#!/bin/python3
+
+'''
+    Module Docstring here
+'''
+
+
 import socket
 from flask import Flask, request, render_template, flash
 from models import DatabaseHandler
@@ -10,6 +17,9 @@ HOSTNAME = socket.gethostname()
 
 
 def handle_cert_title(title):
+    '''
+    Docstring here
+    '''
     if len(title) == 0:
         flash('Fehler: Deine Zertifikatsbezeichnung is leer', category='error')
     elif not all([item.isalnum() or item.isspace() or
@@ -30,6 +40,9 @@ def handle_cert_title(title):
 
 @APP.route("/", methods=['GET', 'POST'])
 def home():
+    '''
+    Docstring here
+    '''
     if request.method == 'POST':  # type: ignore
         cert_title = request.form.get('certificate')  # type: ignore
         handle_cert_title(cert_title)
@@ -43,11 +56,17 @@ def home():
 
 @APP.route("/login", methods=['GET', 'POST'])
 def login():
+    '''
+    Docstring here
+    '''
     return render_template("login.html", hostname=HOSTNAME)
 
 
 @APP.route("/sign_up", methods=['GET', 'POST'])
 def sign_up():
+    '''
+    Docstring here
+    '''
     return render_template("sign_up.html", hostname=HOSTNAME)
 
 
